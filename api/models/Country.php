@@ -1,5 +1,5 @@
 <?php
-namespace api\modules\v1\models;
+namespace api\models;
 use \yii\db\ActiveRecord;
 /**
  * Country Model
