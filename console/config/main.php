@@ -7,29 +7,32 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-console',
-    'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'id'                  => 'app-console',
+    'basePath'            => dirname(__DIR__),
+    'bootstrap'           => ['log'],
     'controllerNamespace' => 'console\controllers',
-    'aliases' => [
+    'aliases'             => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'controllerMap' => [
+    'controllerMap'       => [
         'fixture' => [
-            'class' => 'yii\console\controllers\FixtureController',
+            'class'     => 'yii\console\controllers\FixtureController',
             'namespace' => 'common\fixtures',
-          ],
+        ],
     ],
-    'components' => [
-        'log' => [
+    'components'          => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager'
+        ],
+        'log'         => [
             'targets' => [
                 [
-                    'class' => 'yii\log\FileTarget',
+                    'class'  => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
             ],
         ],
     ],
-    'params' => $params,
+    'params'              => $params,
 ];

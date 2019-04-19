@@ -12,9 +12,9 @@ return [
     'controllerNamespace' => 'api\controllers',
     'bootstrap'           => ['log'],
     'modules'             => [
-        'country' => [
-            'basePath' => '@app/modules/country',
-            'class'    => 'api\modules\country\Module',
+        'v1' => [
+            'basePath' => '@app/modules/v1',
+            'class'    => 'api\modules\v1\Module',
         ],
     ],
     'aliases'             => [
@@ -32,10 +32,8 @@ return [
         'user'         => [
             'identityClass'   => 'common\models\User',
             'enableAutoLogin' => false,
-            //'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
         ],
         'session'      => [
-            // this is the name of the session cookie used for login on the api
             'name' => 'advanced-api',
         ],
         'log'          => [
@@ -55,26 +53,21 @@ return [
             'enableStrictParsing' => true,
             'showScriptName'      => false,
             'rules'               => [
-                '/hello' => 'country/countries/hello',
 
                 [
                     'class'         => 'yii\rest\UrlRule',
-                    'controller'    => 'country/countries',
+                    'controller'    => 'v1/countries',
                     'extraPatterns' => [
-                        'GET test/<code:\d+>' => 'test',
+                        'GET test/<code:\w+>'   => 'test',
+                        'GET cities/<code:\w+>' => 'cities',
                     ],
                 ],
                 [
-                    'class' => 'yii\rest\UrlRule',
-
-                    'controller' => 'country/countries',
-
-                    'tokens' => [
-
-                        '{code}' => '<code:\\w+>',
-
+                    'class'         => 'yii\rest\UrlRule',
+                    'controller'    => 'v1/cities',
+                    'extraPatterns' => [
+                        'GET capital/<countryId:\d+>' => 'capital',
                     ],
-
                 ],
             ],
         ],
