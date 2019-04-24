@@ -32,6 +32,7 @@ return [
         'user'         => [
             'identityClass'   => 'common\models\User',
             'enableAutoLogin' => false,
+            'enableSession'   => false,
         ],
         'session'      => [
             'name' => 'advanced-api',
@@ -58,8 +59,9 @@ return [
                     'class'         => 'yii\rest\UrlRule',
                     'controller'    => 'v1/countries',
                     'extraPatterns' => [
-                        'GET test/<code:\w+>'   => 'test',
+                        'GET test/<code:\d+>'   => 'test',
                         'GET cities/<code:\w+>' => 'cities',
+                        //'POST update/<id:\d+>'   => 'update',
                     ],
                 ],
                 [

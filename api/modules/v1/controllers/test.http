@@ -1,0 +1,37 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+GET http://example.com/v1/countries
+Authorization: Bearer zcmaydw3RENiI6MH50eB-yMcJF1Ll2SS
+
+###
+
+POST http://example.com/v1/countries
+Content-Type: application/json
+Authorization: Bearer zcmaydw3RENiI6MH50eB-yMcJF1Ll2SS
+
+{
+  "code": "RO",
+  "name": "Roman",
+  "population": 2222222
+}
+
+###
+
+PUT http://example.com/v1/countries/11
+Content-Type: application/json
+Authorization: Bearer zcmaydw3RENiI6MH50eB-yMcJF1Ll2SS
+
+{
+  "name": "Roman1"
+}
+
+###
+DELETE http://example.com/v1/countries/11
+Authorization: Bearer zcmaydw3RENiI6MH50eB-yMcJF1Ll2SS
+
+###

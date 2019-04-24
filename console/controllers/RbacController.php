@@ -4,6 +4,7 @@ namespace console\controllers;
 
 use Yii;
 use yii\console\Controller;
+use common\rbac\Permissions;
 
 class RbacController extends Controller
 {
@@ -16,32 +17,32 @@ class RbacController extends Controller
         $auth->add($rule);
 
         // добавляем разрешение "createPost"
-        $createPost              = $auth->createPermission('createPost');
+        $createPost              = $auth->createPermission(Permissions::CREATE_POST);
         $createPost->description = 'Create a post';
         $auth->add($createPost);
 
         // добавляем разрешение "updatePost"
-        $updatePost              = $auth->createPermission('updatePost');
+        $updatePost              = $auth->createPermission(Permissions::UPDATE_POST);
         $updatePost->description = 'Update post';
         $auth->add($updatePost);
 
         //add permission "deletePost"
-        $deletePost = $auth->createPermission('deletePost');
+        $deletePost              = $auth->createPermission(Permissions::DELETE_POST);
         $deletePost->description = 'Delete post';
         $auth->add($deletePost);
 
         //add permission "managePost"
-        $managePost = $auth->createPermission('managePost');
+        $managePost              = $auth->createPermission(Permissions::MANAGE_POST);
         $managePost->description = 'Manage post';
         $auth->add($managePost);
 
-        //add permission "managePost"
-        $viewPost = $auth->createPermission('viewPost');
+        //add permission "viewPost"
+        $viewPost              = $auth->createPermission(Permissions::VIEW_POST);
         $viewPost->description = 'View post';
         $auth->add($viewPost);
 
         // добавляем разрешение "updateOwnPost" и привязываем к нему правило.
-        $updateOwnPost              = $auth->createPermission('updateOwnPost');
+        $updateOwnPost              = $auth->createPermission(Permissions::UPDATE_OWN_POST);
         $updateOwnPost->description = 'Update own post';
         $updateOwnPost->ruleName    = $rule->name;
         $auth->add($updateOwnPost);

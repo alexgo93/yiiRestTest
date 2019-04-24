@@ -3,13 +3,14 @@
 namespace backend\controllers;
 
 use common\models\Countries\Country;
-use yii\db\ActiveRecord;
+use common\services\CountryControllerService;
+use MP\Services\ImplementServices;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use common\models\Countries\CountrySearch;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
+use common\rbac\Permissions;
 
 /**
  * Country Controller API
@@ -18,6 +19,7 @@ use yii\web\NotFoundHttpException;
  */
 class CountriesController extends Controller
 {
+    use ImplementServices;
 
     /**
      * behaviors for country controller
@@ -28,37 +30,37 @@ class CountriesController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['index'],
-                        'roles' => [],
+                        'roles'   => [],
                     ],
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['view'],
-                        'roles' => [],
+                        'roles'   => [],
                     ],
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['create'],
-                        'roles' => ['createPost'],
+                        'roles'   => [Permissions::CREATE_POST],
                     ],
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['update'],
-                        'roles' => ['updatePost'],
+                        'roles'   => [Permissions::UPDATE_POST],
                     ],
                     [
-                        'allow' => true,
+                        'allow'   => true,
                         'actions' => ['delete'],
-                        'roles' => ['deletePost'],
+                        'roles'   => [Permissions::DELETE_POST],
                     ],
                 ],
             ],
-            'verbs' => [
-                'class'   => VerbFilter::className(),
+            'verbs'  => [
+                'class'   => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -67,19 +69,24 @@ class CountriesController extends Controller
     }
 
     /**
+     * @inheritdoc
+     */
+    public function services(): array
+    {
+        return [
+            'countriesControllerService' => CountryControllerService::class,
+        ];
+    }
+
+    /**
      * Lists all Country models.
      *
      * @return string
      */
-    public function actionIndex(): string
+    public function actionIndex()
     {
-        $searchModel  = new CountrySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->render('index', $this->countriesControllerService->allCountries());
 
-        return $this->render('index', [
-            'searchModel'  => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
     }
 
     /**
@@ -92,9 +99,7 @@ class CountriesController extends Controller
      */
     public function actionView(int $id): string
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        return $this->render('view', $this->countriesControllerService->oneCountry($id));
     }
 
     /**

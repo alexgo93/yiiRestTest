@@ -3,6 +3,8 @@
 namespace api\modules\v1\models;
 
 use \yii\db\ActiveRecord;
+use common\services\CountryService;
+use MP\Services\ImplementServices;
 
 /**
  * Country Model
@@ -11,6 +13,8 @@ use \yii\db\ActiveRecord;
  */
 class Country extends ActiveRecord
 {
+    use ImplementServices;
+
     /**
      *
      * @inheritdoc
@@ -43,4 +47,15 @@ class Country extends ActiveRecord
             [['code', 'name', 'population'], 'required'],
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function services(): array
+    {
+        return [
+            'countriesService' => CountryService::class,
+        ];
+    }
+
 }
